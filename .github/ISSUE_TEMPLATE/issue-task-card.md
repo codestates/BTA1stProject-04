@@ -1,15 +1,15 @@
 ---
 name: Issue Task Card
 about: Issue Task Card
-title: "[Task] 제목 입력"
+title: "[Task/Review] 제목 입력"
 labels: ''
 assignees: ''
 
 ---
 
 ### ISSUE
-- Group: `client`, `server`, `sr`
-- Type: `bug`, `feature`, `delete`
+- Group: `client`, `server`
+- Type: `feature`, `update`, `delete`, `bug`
 - Detail: fix actions from client redux
 
 ### TODO
@@ -30,5 +30,5 @@ assignees: ''
 ### Labels
 - Estimated time: `E: 1h`
 - Group : `client`, `server`
-- Sprint: `Sprint__NUMBER__`
+- Sprint: `Sprint1`
 - Urgency: `High`, `Middle`, `Low`
