@@ -1,10 +1,10 @@
 import { CssBaseline } from '@mui/material';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createHashRouter, RouterProvider } from 'react-router-dom';
 import './App.css';
 import Home from './pages/Home';
 import Intro from './pages/Intro';
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: `/`,
     element: <Home />,
