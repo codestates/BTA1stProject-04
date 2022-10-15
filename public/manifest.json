@@ -1,6 +1,12 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Filenori",
+  "name": "Safest Filecoin Wallet",
+  "version": "1.0",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Filenori Main"
+  },
   "icons": [
     {
       "src": "favicon.ico",
