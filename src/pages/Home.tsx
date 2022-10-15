@@ -1,12 +1,13 @@
-import NavBar from "../components/NavBar";
+import { Box } from '@mui/material';
+import NavBar from '../components/NavBar';
 
-function Home() {
-    return (
-        <div>
-            <NavBar />
-            Hello World
-        </div>
-    );
-}
+const Home = () => {
+  return (
+    <Box sx={{ flexGrow: 1 }}>
+      <NavBar />
+      Hello World
+    </Box>
+  );
+};
 
 export default Home;
