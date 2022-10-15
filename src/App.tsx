@@ -1,6 +1,5 @@
 import { CssBaseline } from '@mui/material';
 import { createHashRouter, RouterProvider } from 'react-router-dom';
-import './App.css';
 import Home from './pages/Home';
 import Intro from './pages/Intro';
 
