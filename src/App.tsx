@@ -1,3 +1,4 @@
+import { CssBaseline } from "@mui/material";
 import {
   createBrowserRouter,
   RouterProvider,
@@ -19,7 +20,10 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <RouterProvider router={router} />
+    <>
+      <CssBaseline />
+      <RouterProvider router={router} />
+    </>
   );
 }
 
