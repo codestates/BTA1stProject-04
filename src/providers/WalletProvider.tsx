@@ -19,6 +19,7 @@ interface WalletValue {
   balance: BigNumber | null;
   network: Network;
   setNetwork: (state: Network) => void;
+  create: LightWalletProvider['createLightWallet'];
   recover: LightWalletProvider['recoverLightWallet'];
   send: (receiver: string, amount: BigNumber) => Promise<void>;
   sendingStatus: null | TxStatus;
@@ -40,6 +41,7 @@ const WalletContext = createContext<WalletValue>({
   balance: null,
   network: `mainnet`,
   setNetwork: () => {},
+  create: async () => ``,
   recover: async () => {},
   send: async () => {},
   sendingStatus: null,
@@ -73,6 +75,16 @@ const WalletProvider: FC<PropsWithChildren> = ({ children }) => {
   useEffect(() => {
     loadAccount();
   }, [loadAccount]);
+
+  const create = useCallback<LightWalletProvider['createLightWallet']>(
+    async (password) => {
+      const mnemonic = await provider.createLightWallet(password);
+      loadAccount();
+
+      return mnemonic;
+    },
+    [loadAccount, provider],
+  );
 
   const recover = useCallback<LightWalletProvider['recoverLightWallet']>(
     async (mnemonic, password) => {
@@ -125,12 +137,13 @@ const WalletProvider: FC<PropsWithChildren> = ({ children }) => {
       balance,
       network,
       setNetwork,
+      create,
       recover,
       send,
       sendingStatus,
       resetSendingStatus: () => setSendingStatus(null),
     }),
-    [account, balance, network, recover, send, sendingStatus],
+    [account, balance, network, create, recover, send, sendingStatus],
   );
 
   return (

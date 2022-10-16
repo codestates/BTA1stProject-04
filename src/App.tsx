@@ -2,6 +2,7 @@ import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import { createHashRouter, RouterProvider } from 'react-router-dom';
 import Home from './pages/Home';
 import Intro from './pages/Intro';
+import Create from './pages/Create';
 import Recover from './pages/Recover';
 import Send from './pages/Send';
 import WalletProvider from './providers/WalletProvider';
@@ -14,6 +15,10 @@ const router = createHashRouter([
   {
     path: `/intro`,
     element: <Intro />,
+  },
+  {
+    path: `/create`,
+    element: <Create />,
   },
   {
     path: `/send`,
