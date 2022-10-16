@@ -26,8 +26,14 @@ interface WalletValue {
   resetSendingStatus: () => void;
 }
 
-const mainnetProvider = new LightWalletProvider(lotusClients.mainnet, () =>
-  window.prompt(`비밀번호를 입력해주세요`),
+let currentPassword = ``;
+export const enterPassword = (password: string) => {
+  currentPassword = password;
+};
+
+const mainnetProvider = new LightWalletProvider(
+  lotusClients.mainnet,
+  () => currentPassword,
 );
 const mainnetKeystore = localStorage.getItem(`filenori-mainnet-keystore`);
 if (mainnetKeystore) {
@@ -36,7 +42,7 @@ if (mainnetKeystore) {
 
 const testnetProvider = new LightWalletProvider(
   lotusClients.testnet,
-  () => window.prompt(`비밀번호를 입력해주세요`),
+  () => currentPassword,
   `test`,
 );
 const testnetKeystore = localStorage.getItem(`filenori-testnet-keystore`);

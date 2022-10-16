@@ -3,28 +3,33 @@ import {
   Button,
   CircularProgress,
   Dialog,
+  DialogActions,
   DialogContent,
   DialogTitle,
   FormControl,
   InputAdornment,
   InputLabel,
   OutlinedInput,
+  TextField,
 } from '@mui/material';
 import BigNumber from 'bignumber.js';
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NavBar from '../components/NavBar';
-import { useWallet } from '../providers/WalletProvider';
+import { enterPassword, useWallet } from '../providers/WalletProvider';
 
 const Send = () => {
   const [receiverInput, setReceiverInput] = useState(``);
   const [amountInput, setAmountInput] = useState(``);
+  const [passwordOpen, setPasswordOpen] = useState(false);
+  const [passwordInput, setPasswordInput] = useState(``);
   const { send, sendingStatus, resetSendingStatus } = useWallet();
   const navigate = useNavigate();
 
-  const onSubmit = useCallback(async () => {
-    await send(receiverInput, new BigNumber(amountInput).multipliedBy(1e18));
-  }, [amountInput, receiverInput, send]);
+  const onSubmit = useCallback(() => {
+    setPasswordOpen(true);
+    setPasswordInput(``);
+  }, []);
 
   useEffect(() => {
     if (sendingStatus === `done`) {
@@ -32,6 +37,12 @@ const Send = () => {
       resetSendingStatus();
     }
   }, [navigate, resetSendingStatus, sendingStatus]);
+
+  const runTransaction = useCallback(async () => {
+    setPasswordOpen(false);
+    enterPassword(passwordInput);
+    await send(receiverInput, new BigNumber(amountInput).multipliedBy(1e18));
+  }, [amountInput, passwordInput, receiverInput, send]);
 
   return (
     <>
@@ -84,6 +95,24 @@ const Send = () => {
         <DialogContent sx={{ display: `flex`, justifyContent: `center` }}>
           <CircularProgress />
         </DialogContent>
+      </Dialog>
+      <Dialog open={passwordOpen} onClose={() => setPasswordOpen(false)}>
+        <DialogTitle>패스워드 입력</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            type="password"
+            fullWidth
+            variant="standard"
+            value={passwordInput}
+            onChange={(e) => setPasswordInput(e.target.value)}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setPasswordOpen(false)}>취소</Button>
+          <Button onClick={runTransaction}>보내기</Button>
+        </DialogActions>
       </Dialog>
     </>
   );
