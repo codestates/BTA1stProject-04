@@ -8,8 +8,8 @@
     "default_title": "Filenori Main"
   },
   "icons": {
-    "16": "logo192.png",
-    "48": "logo192.png",
-    "128": "logo192.png"
+    "16": "filenori_logo.png",
+    "48": "filenori_logo.png",
+    "128": "filenori_logo.png"
   }
 }
