@@ -9,33 +9,38 @@ import {
   useMemo,
   useState,
 } from 'react';
-import lotusClient from '../services/lotusClient';
+import lotusClients, { Network } from '../services/lotusClients';
 
 interface LotusValue {
   account: string;
   setAccount: (state: string) => void;
   balance: BigNumber | null;
+  network: Network;
+  setNetwork: (state: Network) => void;
 }
 
 const LotusContext = createContext<LotusValue>({
   account: ``,
   setAccount: () => {},
   balance: null,
+  network: `mainnet`,
+  setNetwork: () => {},
 });
 
 const LotusProvider: FC<PropsWithChildren> = ({ children }) => {
   const [account, setAccount] = useState(``);
   const [balance, setBalance] = useState<BigNumber | null>(null);
+  const [network, setNetwork] = useState<Network>(`mainnet`);
 
   const loadBalance = useCallback(async () => {
     if (!account) {
       return;
     }
 
-    const b = await lotusClient.wallet.balance(account);
+    const b = await lotusClients[network].wallet.balance(account);
 
     setBalance(new BigNumber(b).dividedBy(1e18));
-  }, [account]);
+  }, [account, network]);
 
   useEffect(() => {
     loadBalance();
@@ -46,8 +51,10 @@ const LotusProvider: FC<PropsWithChildren> = ({ children }) => {
       account,
       setAccount,
       balance,
+      network,
+      setNetwork,
     }),
-    [account, balance],
+    [account, balance, network],
   );
 
   return (
