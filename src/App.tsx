@@ -2,8 +2,9 @@ import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import { createHashRouter, RouterProvider } from 'react-router-dom';
 import Home from './pages/Home';
 import Intro from './pages/Intro';
+import Recover from './pages/Recover';
 import Send from './pages/Send';
-import LotusProvider from './providers/LotusProvider';
+import WalletProvider from './providers/WalletProvider';
 
 const router = createHashRouter([
   {
@@ -18,6 +19,10 @@ const router = createHashRouter([
     path: `/send`,
     element: <Send />,
   },
+  {
+    path: `/recover`,
+    element: <Recover />,
+  },
 ]);
 
 const theme = createTheme({
@@ -30,11 +35,11 @@ const App = () => {
   return (
     <>
       <CssBaseline />
-      <LotusProvider>
+      <WalletProvider>
         <ThemeProvider theme={theme}>
           <RouterProvider router={router} />
         </ThemeProvider>
-      </LotusProvider>
+      </WalletProvider>
     </>
   );
 };
