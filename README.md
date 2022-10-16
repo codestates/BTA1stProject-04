@@ -14,3 +14,7 @@
 ### `yarn build`
 
 앱을 빌드하여 확장프로그램으로 열어볼 수 있습니다.
+
+### Faucet
+
+[Faucet](https://faucet.calibration.fildev.network/) 에서 테스트넷 토큰을 받아보실 수 있습니다.
