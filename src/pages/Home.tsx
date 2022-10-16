@@ -8,6 +8,7 @@ import {
   Typography,
 } from '@mui/material';
 import { useCallback, useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
 import NavBar from '../components/NavBar';
 import { useLotus } from '../providers/LotusProvider';
 
@@ -52,7 +53,7 @@ const Home = () => {
         <Typography variant="h4">{balance?.toFormat(3)} FIL</Typography>
       </Box>
       <Box display="flex" justifyContent="center">
-        <Button sx={{ flexDirection: `column` }}>
+        <Button component={Link} to="/send" sx={{ flexDirection: `column` }}>
           <Send sx={{ m: 1 }} />
           <Typography>보내기</Typography>
         </Button>

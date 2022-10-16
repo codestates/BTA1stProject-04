@@ -3,9 +3,16 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import { AccountCircle } from '@mui/icons-material';
-import { ListItemIcon, ListItemText, Menu, MenuItem } from '@mui/material';
+import {
+  Button,
+  ListItemIcon,
+  ListItemText,
+  Menu,
+  MenuItem,
+} from '@mui/material';
 import React from 'react';
 import SettingsIcon from '@mui/icons-material/Settings';
+import { Link } from 'react-router-dom';
 
 const NavBar = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -20,25 +27,24 @@ const NavBar = () => {
 
   return (
     <AppBar position="static">
-      <Toolbar>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          Filenori
-        </Typography>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="menu-appbar"
-          aria-haspopup="true"
-          onClick={handleMenu}
-          color="inherit"
-        >
+      <Toolbar style={{ display: `flex`, justifyContent: `space-between` }}>
+        <Button component={Link} to="/">
+          <Typography
+            variant="h6"
+            color="white"
+            sx={{ flexGrow: 1, textTransform: `none` }}
+          >
+            Filenori
+          </Typography>
+        </Button>
+        <IconButton size="large" onClick={handleMenu} color="inherit">
           <AccountCircle />
         </IconButton>
         <Menu
           id="menu-appbar"
           anchorEl={anchorEl}
           anchorOrigin={{
-            vertical: `top`,
+            vertical: `bottom`,
             horizontal: `right`,
           }}
           keepMounted
