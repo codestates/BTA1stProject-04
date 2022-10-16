@@ -1,13 +1,20 @@
 import { Send } from '@mui/icons-material';
 import { Box, Button, Tooltip, Typography } from '@mui/material';
-import { useCallback, useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import NavBar from '../components/NavBar';
 import { useWallet } from '../providers/WalletProvider';
 
 const Home = () => {
   const [copied, setCopied] = useState(false);
   const { account, balance } = useWallet();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!account) {
+      navigate(`/intro`);
+    }
+  }, [account, navigate]);
 
   const accountDisplay = useMemo(() => {
     if (!account) {
@@ -29,7 +36,11 @@ const Home = () => {
       <NavBar />
       <Box sx={{ my: 2, display: `flex`, justifyContent: `center` }}>
         <Tooltip title={copied ? `복사됨` : `클립보드로 복사`} arrow>
-          <Button variant="text" onClick={copyToClipboard}>
+          <Button
+            variant="text"
+            onClick={copyToClipboard}
+            sx={{ textTransform: `none` }}
+          >
             {accountDisplay}
           </Button>
         </Tooltip>
