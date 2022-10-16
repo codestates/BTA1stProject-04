@@ -14,14 +14,14 @@ import {
   Select,
 } from '@mui/material';
 import React from 'react';
-import SettingsIcon from '@mui/icons-material/Settings';
+import RestoreIcon from '@mui/icons-material/Restore';
 import { Link } from 'react-router-dom';
-import { useLotus } from '../providers/LotusProvider';
+import { useWallet } from '../providers/WalletProvider';
 import { Network } from '../services/lotusClients';
 
 const NavBar = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const { network, setNetwork } = useLotus();
+  const { network, setNetwork } = useWallet();
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -73,13 +73,12 @@ const NavBar = () => {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            <MenuItem onClick={handleClose}>
+            <MenuItem component={Link} to="/recover">
               <ListItemIcon>
-                <SettingsIcon fontSize="small" />
+                <RestoreIcon fontSize="small" />
               </ListItemIcon>
-              <ListItemText>Setting</ListItemText>
+              <ListItemText>Recover</ListItemText>
             </MenuItem>
-            <MenuItem onClick={handleClose}>My account</MenuItem>
           </Menu>
         </Box>
       </Toolbar>

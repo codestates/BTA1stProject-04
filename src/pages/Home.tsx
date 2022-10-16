@@ -1,21 +1,13 @@
 import { Send } from '@mui/icons-material';
-import {
-  Box,
-  Button,
-  TextField,
-  Toolbar,
-  Tooltip,
-  Typography,
-} from '@mui/material';
+import { Box, Button, Tooltip, Typography } from '@mui/material';
 import { useCallback, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import NavBar from '../components/NavBar';
-import { useLotus } from '../providers/LotusProvider';
+import { useWallet } from '../providers/WalletProvider';
 
 const Home = () => {
-  const [accountInput, setAccountInput] = useState(``);
   const [copied, setCopied] = useState(false);
-  const { account, setAccount, balance } = useLotus();
+  const { account, balance } = useWallet();
 
   const accountDisplay = useMemo(() => {
     if (!account) {
@@ -35,14 +27,7 @@ const Home = () => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <NavBar />
-      <Toolbar>
-        <TextField
-          value={accountInput}
-          onChange={(e) => setAccountInput(e.target.value)}
-        />
-        <Button onClick={() => setAccount(accountInput)}>Load</Button>
-      </Toolbar>
-      <Box display="flex" justifyContent="center">
+      <Box sx={{ my: 2, display: `flex`, justifyContent: `center` }}>
         <Tooltip title={copied ? `복사됨` : `클립보드로 복사`} arrow>
           <Button variant="text" onClick={copyToClipboard}>
             {accountDisplay}
