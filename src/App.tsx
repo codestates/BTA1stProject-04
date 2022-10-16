@@ -1,7 +1,8 @@
-import { CssBaseline } from '@mui/material';
+import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import { createHashRouter, RouterProvider } from 'react-router-dom';
 import Home from './pages/Home';
 import Intro from './pages/Intro';
+import LotusProvider from './providers/LotusProvider';
 
 const router = createHashRouter([
   {
@@ -14,11 +15,21 @@ const router = createHashRouter([
   },
 ]);
 
+const theme = createTheme({
+  typography: {
+    fontFamily: `'Noto Sans KR', sans-serif`,
+  },
+});
+
 const App = () => {
   return (
     <>
       <CssBaseline />
-      <RouterProvider router={router} />
+      <LotusProvider>
+        <ThemeProvider theme={theme}>
+          <RouterProvider router={router} />
+        </ThemeProvider>
+      </LotusProvider>
     </>
   );
 };
