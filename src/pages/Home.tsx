@@ -11,10 +11,10 @@ const Home = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!account) {
+    if (!localStorage.getItem(`filenori-mainnet-keystore`)) {
       navigate(`/intro`);
     }
-  }, [account, navigate]);
+  }, [navigate]);
 
   const accountDisplay = useMemo(() => {
     if (!account) {

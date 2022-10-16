@@ -18,7 +18,7 @@ const Create = () => {
   const [mnemonicInput, setMnemonicInput] = useState(``);
   const [mnemonic, setMnemonic] = useState(``);
   const [disabled, setDisabled] = useState(true);
-  const { create } = useWallet();
+  const { create, recover } = useWallet();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -51,9 +51,10 @@ const Create = () => {
       setMnemonic(``);
       setDisabled(true);
       alert(`지갑 생성이 완료되었습니다.`);
+      await recover(mnemonic, passwordInput);
       navigate(`/`);
     }
-  }, [step, navigate, create, passwordInput]);
+  }, [step, create, recover, mnemonic, passwordInput, navigate]);
 
   const titleComponent = {
     1: `비밀번호 설정`,
@@ -68,10 +69,12 @@ const Create = () => {
           sx={{ m: 1, width: `calc(100% - 16px)` }}
           variant="outlined"
         >
-          <InputLabel htmlFor="password-input">새 비밀번호</InputLabel>
+          <InputLabel htmlFor="password-input">
+            새 비밀번호 (8자 이상)
+          </InputLabel>
           <OutlinedInput
             id="password-input"
-            label="새 비밀번호(8자 이상)"
+            label="새 비밀번호 (8자 이상)"
             type="password"
             value={passwordInput}
             onChange={(e) => setPasswordInput(e.target.value)}

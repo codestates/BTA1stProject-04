@@ -29,12 +29,20 @@ interface WalletValue {
 const mainnetProvider = new LightWalletProvider(lotusClients.mainnet, () =>
   window.prompt(`비밀번호를 입력해주세요`),
 );
+const mainnetKeystore = localStorage.getItem(`filenori-mainnet-keystore`);
+if (mainnetKeystore) {
+  mainnetProvider.loadLightWallet(mainnetKeystore);
+}
 
 const testnetProvider = new LightWalletProvider(
   lotusClients.testnet,
   () => window.prompt(`비밀번호를 입력해주세요`),
   `test`,
 );
+const testnetKeystore = localStorage.getItem(`filenori-testnet-keystore`);
+if (testnetKeystore) {
+  testnetProvider.loadLightWallet(testnetKeystore);
+}
 
 const WalletContext = createContext<WalletValue>({
   account: ``,
@@ -79,17 +87,25 @@ const WalletProvider: FC<PropsWithChildren> = ({ children }) => {
   const create = useCallback<LightWalletProvider['createLightWallet']>(
     async (password) => {
       const mnemonic = await provider.createLightWallet(password);
-      loadAccount();
 
       return mnemonic;
     },
-    [loadAccount, provider],
+    [provider],
   );
 
   const recover = useCallback<LightWalletProvider['recoverLightWallet']>(
     async (mnemonic, password) => {
       await mainnetProvider.recoverLightWallet(mnemonic, password);
       await testnetProvider.recoverLightWallet(mnemonic, password);
+
+      localStorage.setItem(
+        `filenori-mainnet-keystore`,
+        mainnetProvider.keystore.serialize(),
+      );
+      localStorage.setItem(
+        `filenori-testnet-keystore`,
+        testnetProvider.keystore.serialize(),
+      );
 
       loadAccount();
     },
@@ -143,7 +159,7 @@ const WalletProvider: FC<PropsWithChildren> = ({ children }) => {
       sendingStatus,
       resetSendingStatus: () => setSendingStatus(null),
     }),
-    [account, balance, network, create, recover, send, sendingStatus],
+    [account, balance, create, network, recover, send, sendingStatus],
   );
 
   return (
